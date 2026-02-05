@@ -1,0 +1,69 @@
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Easy Quiz Ehou",
+  "version": "1.3.6",
+  "description": "Easy Quiz Ehou là tiện ích free hỗ trợ làm trắc nhiệm cho sinh viên Ehou. Đã được tích hợp thêm AI để hỗ trợ tốt hơn.",
+  "action": {
+    "default_title": "Easy Quiz Ehou",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/logo128.png",
+      "48": "images/logo128.png",
+      "128": "images/logo128.png"
+    }
+  },
+  "icons": {
+    "16": "images/logo128.png",
+    "48": "images/logo128.png",
+    "128": "images/logo128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["images/ai-agent.png","images/logo128.png"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "permissions": [
+    "storage",
+    "contextMenus",
+    "notifications",
+    "sidePanel"
+  ],
+  "host_permissions": [
+    "https://learning.ehou.edu.vn/*",
+    "https://lmshub.hou.edu.vn/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [      
+        "https://learning.ehou.edu.vn/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "core/logger.js",
+        "core/utils.js",
+        "contentScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://lmshub.hou.edu.vn/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "core/logger.js",
+        "core/utils.js",
+        "contentScriptEhou_new.js"
+      ]
+    }
+  ]
+}

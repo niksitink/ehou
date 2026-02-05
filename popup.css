@@ -1,0 +1,1135 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    max-height: 600px; /* Giới hạn tối đa cho Chrome extension popup */
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #1e1e2f;
+    color: #f1f1f1;
+    width: 350px; /* Điều chỉnh lại chiều rộng */
+    min-height: 280px;
+    height: auto !important;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    overflow: auto; /* Không cho phép cuộn */
+}
+
+/* Registration form - wider and 2 columns */
+body.register-mode {
+    width: 600px !important; /* Wider for registration */
+    min-width: 600px;
+}
+
+body.register-mode .container {
+    width: 100%;
+}
+
+.register-form-container {
+    width: 100%;
+    max-width: 100%;
+}
+
+.register-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.register-form-column {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.register-form-column input {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.register-form-column .password-wrapper {
+    width: 100%;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h2 {
+    margin-bottom: 10px;
+    margin-top: 0px;
+    color: rgb(22, 119, 255);
+    font-size: 1.8em;
+}
+
+input {
+    width: 80%;
+    padding: 12px;
+    margin: 5px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 12px;
+    background-color: #333;
+    color: white;
+}
+
+/* Base button styles */
+.action-btn {
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 12px;
+    font-size: 15px;
+    color: white;
+    z-index: 1;
+}
+
+/* Gradient backgrounds for action buttons */
+#save {
+    background: linear-gradient(45deg, #4CAF50, #8BC34A);
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.2);
+}
+
+#check {
+    background: linear-gradient(45deg, #9C27B0, #E91E63);
+    box-shadow: 0 4px 15px rgba(156, 39, 176, 0.2);
+}
+
+#export {
+    background: linear-gradient(45deg, #FF9800, #FF5722);
+    box-shadow: 0 4px 15px rgba(255, 152, 0, 0.2);
+}
+
+#exportpdf {
+    background: linear-gradient(45deg, #2196F3, #03A9F4);
+    box-shadow: 0 4px 15px rgba(33, 150, 243, 0.2);
+}
+
+/* Hover effect with shine */
+.action-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+            120deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent
+    );
+    transition: all 0.6s;
+}
+
+.action-btn:hover::before {
+    left: 100%;
+}
+
+/* Click effect */
+.action-btn:active {
+    transform: scale(0.97);
+}
+
+/* Hover transform and shadow */
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Gradient buttons specific styles */
+.gradient-btn.pink-green {
+    background: linear-gradient(45deg, #ff0080, #00dbde);
+    box-shadow: 0 4px 15px rgba(255, 0, 128, 0.2);
+}
+
+.gradient-btn.purple-blue {
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
+    box-shadow: 0 4px 15px rgba(106, 17, 203, 0.2);
+}
+
+.gradient-btn.red-green {
+    background: linear-gradient(45deg, #3F5EFB, #FC466B);
+    box-shadow: 0 4px 15px rgba(63, 94, 251, 0.2);
+}
+
+.gradient-btn.pink-red {
+    background: linear-gradient(45deg, #833AB4, #FD1D1D, #FCB045);
+    box-shadow: 0 4px 15px rgba(131, 58, 180, 0.2);
+}
+
+.gradient-btn.white-rose {
+    background: linear-gradient(45deg, #EEAECA, #94BBE9);
+    box-shadow: 0 4px 15px rgba(238, 174, 202, 0.2);
+}
+
+/* Loading state animation */
+.action-btn.loading {
+    position: relative;
+    cursor: wait;
+    color: transparent;
+}
+
+.action-btn.loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* Disabled state */
+.action-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Focus state */
+.action-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+}
+
+/* Success state animation */
+@keyframes success {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.action-btn.success {
+    animation: success 0.5s ease-in-out;
+}
+
+/* Ripple effect */
+.action-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(20, 20);
+        opacity: 0;
+    }
+}
+
+.action-btn:focus:not(:active)::after {
+    animation: ripple 1s ease-out;
+}
+
+button.secondary {
+    background-color: #757575;
+}
+
+button.secondary:hover {
+    background-color: #616161;
+}
+
+/* Chuyển đổi giữa màn hình đăng nhập và đăng ký */
+#register {
+    display: none;
+}
+
+#loginbtn {
+    background-color: #00bcd4;
+}
+
+#registerbtn {
+    background-color: #757575;
+}
+
+/* Style for user section when logged in */
+.main-actions {
+    display: none;
+}
+
+.user-bar {
+    margin-bottom: 15px;
+}
+
+.user-name {
+    font-weight: bold;
+    color: #00e5ff;
+    margin-bottom: 10px;
+}
+
+#logout {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 10px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+/* Cải tiến giao diện của các nút và trường nhập */
+#loginbtn, #submitRegister {
+    width: 50%;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #00bcd4;
+    color: white;
+}
+
+.register-form input {
+    width: 80%;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: #333;
+    color: white;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #444;
+}
+
+/* Main content: padding nhẹ */
+.main-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px 0;
+    max-height: calc(100% - 100px); /* trừ phần header + footer */
+}
+
+
+/* Footer với line trên */
+.footer {
+    text-align: center;
+    font-size: 12px;
+    color: #aaa;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid #444;
+}
+
+.footer a {
+    color: #00e5ff;
+    text-decoration: none;
+}
+
+/* 💠 Nút Gradient */
+.gradient-btn {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    background-size: 200% auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.pink-green {
+    background-image: linear-gradient(to right, #ec008c, #00dbde);
+}
+
+.purple-blue {
+    background-image: linear-gradient(to right, #6a11cb, #2575fc);
+}
+
+.red-green {
+    background: #3F5EFB;
+    background: radial-gradient(circle, rgba(63, 94, 251, 1) 0%, rgba(252, 70, 107, 1) 100%);
+}
+
+.pink-red {
+    background: #833AB4;
+    background: linear-gradient(90deg, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 50%, rgba(252, 176, 69, 1) 100%);
+}
+
+.white-rose {
+    background: #EEAECA;
+    background: radial-gradient(circle, rgba(238, 174, 202, 1) 26%, rgba(148, 187, 233, 1) 100%);
+}
+
+.gradient-btn:hover {
+    filter: brightness(1.1);
+}
+
+/* 🎯 Nút quay lại */
+.back-btn {
+    background-color: transparent;
+    color: #00e5ff;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 5px;
+    text-decoration: underline;
+}
+
+/* 🧱 Form layout */
+.entry-screen, .form-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* ✨ Fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.back-btn-top {
+    position: absolute;
+    left: -10px;
+    top: 5%;
+    width: 10%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+}
+
+.form-screen {
+    position: relative;
+    padding-top: 10px; /* Chừa khoảng cho nút quay lại */
+}
+
+.note {
+    color: red;
+    font-size: 12px;
+    margin-top: 8px;
+}
+
+.form-screen-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#registerWrapper {
+    width: 100%;
+}
+
+.user-menu {
+    position: absolute;
+    right: 0;
+    top: auto;
+    bottom: 0;
+    font-size: 12px;
+    z-index: 20;
+    user-select: none;
+}
+
+.username-display {
+    cursor: pointer;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.user-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #2c2c3c;
+    border: 1px solid #555;
+    border-radius: 6px;
+    margin-top: 6px;
+    min-width: 120px;
+    padding: 5px 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+
+}
+
+.user-dropdown button {
+    background: none;
+    color: white;
+    border: none;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 10px;
+    transition: 0.3s ease;
+}
+
+.user-dropdown button:hover {
+    background-color: #444;
+}
+
+
+/* toast */
+#toast {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    display: none;
+    color: #fff;
+    padding: 14px 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(4px);
+    justify-content: center;
+    align-items: center;
+}
+
+#toast .toast-content {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* ✅ Căn giữa ngang */
+    gap: 10px;
+    font-size: 16px;
+    width: 100%;
+    text-align: center;
+}
+
+.toast.success {
+    background-color: rgba(0, 255, 5, 0.5); /* xanh lá trong suốt */
+}
+
+.toast.error {
+    background-color: rgba(250, 21, 0, 0.56); /* đỏ nhạt */
+}
+
+.toast-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.8);
+    width: 100%;
+    animation: progressAnim 3s linear forwards;
+}
+
+@keyframes progressAnim {
+    from {
+        width: 100%;
+    }
+    to {
+        width: 0%;
+    }
+}
+
+@keyframes fadeSlide {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -10px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+/* 📝 subjectSelect */
+/* 👉 Ô input */
+
+/* 🧾 Dòng label + select chung 1 hàng */
+/*.subject-row {*/
+/*    position: relative;*/
+/*    margin-bottom: 25px;*/
+/*    width: 100%;*/
+/*}*/
+
+.subject-row {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* khoảng cách giữa select và button */
+}
+
+.subjectSelect, #change-course {
+    height: 40px;
+    width: 150px; /* fix width bằng nhau */
+    box-sizing: border-box;
+}
+
+#change-course {
+    height: 40px;
+    cursor: pointer;
+    width: 90px;
+    background: #4f46e5;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 4px 8px rgb(79 70 229 / 0.4);
+}
+
+#change-course:hover {
+    background: #4338ca;
+    box-shadow: 0 6px 12px rgb(67 56 202 / 0.6);
+    transform: translateY(-2px);
+}
+
+#change-course:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 6px rgb(67 56 202 / 0.5);
+}
+
+/* ✏️ Label cho môn học */
+.subject-row label {
+    display: block;
+    margin-bottom: 8px;
+    color: #00e5ff;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: left;
+}
+
+/* 🎯 Đảm bảo ô input không quá rộng */
+.subject-row .ts-wrapper {
+    width: 100%;
+}
+
+/* 📦 Nút bên dưới cách ra rõ ràng */
+.main-actions .action-btn {
+    margin-top: 10px;
+}
+
+.ts-control {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 2px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 12px !important;
+    color: white !important;
+    padding: 12px !important;
+    transition: all 0.3s ease;
+}
+
+.ts-control:hover {
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.ts-control.focus {
+    border-color: #00bcd4 !important;
+    box-shadow: 0 0 15px rgba(0, 188, 212, 0.3) !important;
+}
+
+/* 👉 Dropdown popup */
+.ts-dropdown {
+    background: rgba(30, 30, 47, 0.95) !important;
+    border: none !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+    margin-top: 8px !important;
+    padding: 8px !important;
+    backdrop-filter: blur(10px);
+}
+
+.ts-dropdown .option {
+    padding: 10px 12px !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    border-radius: 8px !important;
+    transition: all 0.2s ease;
+}
+
+.ts-dropdown .option:hover,
+.ts-dropdown .option.active {
+    background: rgba(0, 188, 212, 0.2) !important;
+    color: white !important;
+}
+
+.ts-dropdown .option.selected {
+    background: rgba(0, 188, 212, 0.4) !important;
+    color: white !important;
+}
+
+/* Loading State */
+.subject-row.loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(30, 30, 47, 0.7);
+    backdrop-filter: blur(4px);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.subject-row.loading::before {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #00e5ff;
+    animation: spin 0.8s linear infinite;
+    z-index: 11;
+}
+
+@keyframes spin {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* Placeholder style */
+.ts-control input::placeholder {
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.ts-control.has-items {
+    padding-left: 12px !important;
+}
+
+.ts-control > * {
+    color: white !important;
+}
+
+.package-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.package {
+    background-color: rgba(255, 255, 255, 0.06);
+    padding: 14px;
+    border-radius: 12px;
+    text-align: center;
+    width: 130px;
+}
+
+.package p {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.password-wrapper {
+    position: relative;
+    width: 80%;
+    margin: 8px 0;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrapper input[type="password"],
+.password-wrapper input[type="text"] {
+    width: 100%;
+    padding-right: 36px;
+    margin: 0;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    user-select: none;
+    color: #aaa;
+    z-index: 2;
+    display: none;
+}
+
+.toggle-password.show {
+    display: block;
+}
+
+.package.pro {
+    position: relative;
+    box-shadow: 0 0 8px 1px #00fff7, 0 2px 12px 0 rgba(0, 255, 255, 0.10);
+    border: 1.5px solid #00fff7;
+    animation: pro-glow 2.5s linear infinite;
+    z-index: 2;
+}
+
+@keyframes pro-glow {
+    0% {
+        box-shadow: 0 0 8px 1px #00fff7, 0 2px 12px 0 rgba(0, 255, 255, 0.10);
+    }
+    50% {
+        box-shadow: 0 0 16px 3px #00fff7, 0 4px 20px 0 #00fff7;
+    }
+    100% {
+        box-shadow: 0 0 8px 1px #00fff7, 0 2px 12px 0 rgba(0, 255, 255, 0.10);
+    }
+}
+
+.package.pro:hover {
+    transform: scale(1.05);
+    border-color: #b2f7ff;
+    box-shadow: 0 0 20px 4px #00fff7, 0 4px 20px 0 #00fff7;
+}
+
+.package.pro .ribbon {
+    position: absolute;
+    top: 10px;
+    left: -18px;
+    background: linear-gradient(90deg, #00fff7, #6a11cb);
+    color: #222;
+    font-weight: bold;
+    font-size: 12px;
+    padding: 3px 22px;
+    border-radius: 8px 0 12px 0;
+    box-shadow: 0 2px 8px #00fff799;
+    letter-spacing: 1px;
+    transform: rotate(-18deg);
+    z-index: 3;
+}
+
+.package.premium {
+    position: relative;
+    box-shadow: 0 0 6px 1px #ffb300, 0 2px 8px 0 rgba(255, 179, 0, 0.10);
+    border: 1.5px solid #ffb300;
+    animation: premium-glow 2.5s linear infinite;
+    z-index: 2;
+}
+
+@keyframes premium-glow {
+    0% {
+        box-shadow: 0 0 6px 1px #ffb300, 0 2px 8px 0 rgba(255, 179, 0, 0.10);
+    }
+    50% {
+        box-shadow: 0 0 14px 3px #ffb300, 0 4px 16px 0 #ffb300;
+    }
+    100% {
+        box-shadow: 0 0 6px 1px #ffb300, 0 2px 8px 0 rgba(255, 179, 0, 0.10);
+    }
+}
+
+.package.premium:hover {
+    transform: scale(1.05);
+    border-color: #ffe082;
+    box-shadow: 0 0 18px 4px #ffb300, 0 4px 16px 0 #ffb300;
+}
+
+.package.premium .ribbon.premium {
+    position: absolute;
+    top: 10px;
+    left: -18px;
+    background: linear-gradient(90deg, #ffe082, #ffb300);
+    color: #222;
+    font-weight: bold;
+    font-size: 12px;
+    padding: 3px 22px;
+    border-radius: 8px 0 12px 0;
+    box-shadow: 0 2px 8px #ffb30099;
+    letter-spacing: 1px;
+    transform: rotate(-18deg);
+    z-index: 3;
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #2a2a2a;
+    padding: 20px;
+    border-radius: 12px;
+    width: 80%;
+    max-width: 400px;
+    position: relative;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 0; /* Remove margin auto */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal .close {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal .close:hover {
+    color: #fff;
+}
+
+.profile-info {
+    max-width: 340px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.profile-info h3 {
+    margin-bottom: 15px;
+    color: #fff;
+    text-align: center;
+}
+
+.profile-info p {
+    width: 100%;
+    max-width: 340px;
+    margin-left: auto;
+    margin-right: auto;
+    word-break: break-all;
+}
+
+.profile-info strong {
+    color: #4CAF50;
+    margin-right: 10px;
+}
+
+#changePasswordModal h3 {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+#changePasswordModal .password-wrapper {
+    width: 100%;
+    max-width: 320px;
+}
+
+#changePasswordModal input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#changePasswordModal button {
+    width: 100%;
+    max-width: 320px;
+    margin-top: 15px;
+}
+
+/* Scrollable box với chiều cao cố định và scrollbar tùy chỉnh */
+.subject-list-scrollable {
+    max-height: 220px; /* chiều cao cố định */
+    overflow-y: auto; /* cuộn dọc */
+    padding-left: 20px;
+    margin-top: 8px;
+    border: 1px solid #444;
+    border-radius: 6px;
+    background-color: #1e1e2f; /* nền tối dịu mắt */
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.6);
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #8af3de #505050; /* Firefox */
+}
+
+/* Chrome, Edge, Safari: tùy chỉnh scrollbar */
+.subject-list-scrollable::-webkit-scrollbar {
+    width: 8px;
+}
+
+.subject-list-scrollable::-webkit-scrollbar-track {
+    background: #222;
+    border-radius: 6px;
+}
+
+.subject-list-scrollable::-webkit-scrollbar-thumb {
+    background-color: #666;
+    border-radius: 6px;
+    border: 2px solid #222;
+}
+
+/* Các li trong danh sách */
+.subject-list-scrollable li {
+    padding: 4px 0;
+    font-size: 14px;
+    color: #ddd;
+    line-height: 1.4;
+    border-bottom: 1px solid #333;
+}
+
+.subject-list-scrollable li:last-child {
+    border-bottom: none;
+}
+
+.settings-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.settings-row:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.settings-label {
+    display: flex;
+    align-items: center;
+    color: #e0e0e0;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.settings-label .icon {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(22px);
+    -ms-transform: translateX(22px);
+    transform: translateX(22px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+}
+
+.logo-link {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+}
+
+.logo-link:visited, .logo-link:active, .logo-link:hover {
+    text-decoration: none;
+    color: inherit;
+}
+

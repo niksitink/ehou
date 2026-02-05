@@ -1,0 +1,203 @@
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Easy Quiz EHOU</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="libs/tom-select.css">
+    <link rel="stylesheet" href="popup.css">
+    <!-- Scripts -->
+    <script src="libs/jquery.js"></script>
+    <script src="libs/tom-select.complete.min.js"></script>
+    <script src="libs/sockjs.min.js"></script>
+    <script src="libs/stomp.min.js"></script>
+
+
+</head>
+<body>
+<div class="container">
+
+    <!-- 🧠 HEADER -->
+    <header class="header">
+        <button class="back-btn-top" id="backToHome" style="display: none;">←</button>
+        <a href="https://easyquizehou.io.vn/" target="_blank" class="logo-link" style="display:inline-block;">
+            <div class="logo-title">
+                <img src="images/logo.png" alt="Logo" class="logo-header" style="height:3em;margin-right:10px;" />
+                <h2 style="margin:0;">Easy Quiz</h2>
+            </div>
+        </a>
+        <div class="user-menu" style="display:none;">
+            <div class="username-display" id="userDropdownToggle">👤 <span id="user"></span> ▾</div>
+            <div class="user-dropdown" id="userDropdown">
+                <button id="changePassword">Change Password</button>
+                <button id="logout">Logout</button>
+                <button id="profile">Profile</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 📦 BODY -->
+    <main class="main-content">
+
+        <!--Màn home-->
+        <div class="entry-screen" id="entry">
+            <p>Vui lòng đăng ký hoặc đăng nhập để sử dụng</p>
+            <button id="goToLogin" class="gradient-btn pink-green">Đăng nhập</button>
+            <button id="goToRegister" class="gradient-btn purple-blue">Đăng ký</button>
+        </div>
+
+        <!-- 👤 Login form -->
+        <div class="form-screen-wrapper" style="display:none;" id="loginWrapper">
+            <div class="form-screen" id="login">
+                <h1>Đăng nhập</h1>
+                <input type="text" class="user" placeholder="Username">
+                <div class="password-wrapper">
+                    <input type="password" class="pwd" placeholder="Password">
+                    <span class="toggle-password" data-target="pwd">👁️</span>
+                </div>
+                <button id="loginbtn" class="gradient-btn pink-green">Đăng nhập</button>
+                <small class="note">Đăng nhập đúng với tên đăng nhập trên ehou để sử dụng</small>
+            </div>
+        </div>
+
+        <!-- 📝 Register form -->
+        <div class="form-screen-wrapper" id="registerWrapper" style="display: none;">
+            <div class="form-screen register-form-container">
+                <h1>Đăng ký</h1>
+                <p style="color: #90ee90; text-align: center; margin-bottom: 12px; font-weight: 500;">
+                    🎁 Đăng ký mới nhận ngay <strong>100 lượt tìm kiếm</strong> miễn phí!
+                </p>
+                <div class="register-form-grid">
+                    <div class="register-form-column">
+                        <input type="text" class="username" placeholder="Username">
+                        <input type="email" class="email" placeholder="Email">
+                        <input type="text" class="phone" placeholder="Phone">
+                    </div>
+                    <div class="register-form-column">
+                        <input type="text" class="student-code" placeholder="Mã sinh viên (tùy chọn)">
+                        <div class="password-wrapper">
+                            <input type="password" class="pwd" placeholder="Password">
+                            <span class="toggle-password" data-target="pwd">👁️</span>
+                        </div>
+                        <div class="password-wrapper">
+                            <input type="password" class="confirm-pwd" placeholder="Confirm password">
+                            <span class="toggle-password" data-target="confirm-pwd">👁️</span>
+                        </div>
+                    </div>
+                </div>
+                <button id="submitRegister" class="gradient-btn purple-blue">Đăng ký</button>
+                <small class="note">Đăng ký đúng với tên đăng nhập trên ehou để sử dụng</small>
+            </div>
+        </div>
+
+        <!-- 📧 Email Verification Screen -->
+        <div class="form-screen-wrapper" id="emailVerificationWrapper" style="display: none;">
+            <div class="form-screen">
+                <div style="text-align: center; padding: 20px 0;">
+                    <div style="font-size: 48px; margin-bottom: 15px;">✉️</div>
+                    <p style="color: #e0e0e0; margin-bottom: 15px; line-height: 1.6;">
+                        Đăng ký thành công! Vui lòng kiểm tra email để xác nhận tài khoản.
+                    </p>
+                    <p style="color: #999; font-size: 13px; margin-bottom: 20px; line-height: 1.5;">
+                        Chúng tôi đã gửi link xác nhận đến email của bạn.<br>
+                        Sau khi xác nhận, bạn có thể đăng nhập và nhận <strong>100 lượt tìm kiếm</strong> miễn phí!
+                    </p>
+                    <div style="background: #2a2a3a; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <p style="color: #90ee90; font-size: 12px; margin: 0;">
+                            💡 <strong>Lưu ý:</strong> Link xác nhận sẽ hết hạn sau 24 giờ
+                        </p>
+                    </div>
+                </div>
+                <button id="goToLoginFromVerification" class="gradient-btn pink-green">Đến trang đăng nhập</button>
+                <small class="note" style="margin-top: 15px; display: block;">
+                    Chưa nhận được email? Kiểm tra thư mục spam
+                </small>
+            </div>
+        </div>
+
+
+        <!-- Màn hình chính sau khi đăng nhập -->
+        <div class="main-actions" id="wrap">
+            <div class="subject-row">
+                <select id="subjectSelect" class="subjectSelect" placeholder="Chọn môn học">
+                    <option value="">-- Chọn môn học --</option>
+                </select>
+                <button class="action-btn" id="change-course">Đổi</button>
+            </div>
+            <div id="changeAttemptsDisplay" style="margin:10px 0 0 0; font-size:14px; color:#e0e0e0; text-align:center; font-weight:500; min-height:20px;"></div>
+            <div class="settings-row">
+                <label for="widgetToggle" class="settings-label">
+                    <span class="icon">⚙️</span>
+                    <span>Hiển thị Widget kết quả</span>
+                </label>
+                <label class="switch">
+                    <input type="checkbox" id="widgetToggle" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <button class="action-btn" id="save">Lưu đáp án đúng</button>
+            <button class="action-btn" id="check">Auto làm bài</button>
+            <button class="action-btn" id="export">Xuất đáp án theo môn</button>
+            <button class="action-btn" id="exportpdf">Xuất PDF</button>
+        </div>
+
+        <!-- Màn hình donate -->
+        <div id="donateModal" class="form-screen-wrapper" style="display:none;">
+            <div class="form-screen">
+                <h2>Ủng hộ và nâng cấp</h2>
+                <div class="package-row">
+                    <div class="package">
+                        <p>🎯 20.000đ / 1 môn</p>
+                        <button class="action-btn purchase-btn gradient-btn pink-green" data-package-id="1">Mua</button>
+                    </div>
+                    <div class="package">
+                        <p>💣 90.000đ / 5 môn</p>
+                        <button class="action-btn purchase-btn gradient-btn pink-red" data-package-id="2">Mua</button>
+                    </div>
+                    <div class="package premium">
+                        <span class="ribbon premium">PREMIUM</span>
+                        <p>🔥 180.000đ / 10 môn</p>
+                        <button class="action-btn purchase-btn gradient-btn red-green" data-package-id="3">Mua</button>
+                    </div>
+                    <div class="package pro">
+                        <span class="ribbon">PRO</span>
+                        <p>💎 350.000đ / 20 môn</p>
+                        <button class="action-btn purchase-btn gradient-btn white-rose" data-package-id="4">Mua</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Màn hình QR riêng -->
+        <div id="qrModal" class="form-screen-wrapper" style="display:none;">
+            <div class="form-screen">
+                <h2>Quét mã QR</h2>
+                <img id="qrImageBig" src="" width="220" height="220" style="border-radius:12px;" />
+                <p style="color:#ccc; font-size:13px;">Vui lòng dùng app ngân hàng để thanh toán</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- 🦶 FOOTER -->
+    <footer class="footer">
+        <small>© 2025 EHOU Quiz Tool | <a href="https://zalo.me/0559132413" target="_blank">Liên hệ hỗ trợ</a> | <a href="#" id="donateBtn">Donate / Mua gói</a></small>
+    </footer>
+
+</div>
+
+<script src="libs/qrcode.min.js"></script>
+<script src="config.js"></script>
+<script src="core/api.js"></script>
+<script src="core/utils.js"></script>
+<script src="popup.js"></script>
+<script src="popup_init.js"></script>
+
+<div id="toast" class="toast">
+    <div class="toast-content">
+        <span><span id="toastIcon">✅</span> <span id="toastMessage">Thông báo</span></span>
+    </div>
+    <div class="toast-progress"></div>
+</div>
+
+</body>
+</html>

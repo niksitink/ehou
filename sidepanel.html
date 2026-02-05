@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Tìm câu hỏi | Easy Quiz</title>
+    <link rel="stylesheet" href="sidepanel.css"/>
+    <!-- Scripts -->
+    <script src="libs/jquery.js"></script>
+    <script src="libs/tom-select.complete.min.js"></script>
+    <script src="libs/sockjs.min.js"></script>
+    <script src="libs/stomp.min.js"></script>
+</head>
+<body>
+<!-- 🧠 HEADER -->
+<header class="header">
+    <a href="https://easyquizehou.io.vn/" target="_blank" class="logo-link" style="display:inline-block;">
+        <div class="logo-title">
+            <img src="images/logo.png" alt="Logo" class="logo-header" style="height:2.2em;margin-right:10px;" />
+            <h2 style="margin:0;color:rgb(22,119,255);">Easy Quiz</h2>
+        </div>
+    </a>
+    <div class="user-info" id="userInfo">
+        <span id="usernameDisplay"><span id="username"></span></span>
+        <div class="user-dropdown" id="userDropdown" style="display:none;"></div>
+    </div>
+</header>
+<div id="login-warning" style="
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   /* căn giữa theo chiều dọc */
+    align-items: center;       /* căn giữa theo chiều ngang */
+    text-align: center;        /* căn giữa dòng chữ */
+    flex: 1;
+    padding: 10px;
+    color: #777474;
+">
+    Bạn cần đăng nhập để sử dụng Easy Quiz.
+</div>
+
+<div id="main-content" style="display:none; flex: 1; display: flex; flex-direction: column;">
+    <div class="center-btn">
+        <button class="quickSolveBtn" id="quickSolveBtn">Auto làm bài</button>
+    </div>
+
+    <div class="search-box">
+        <input type="text" id="question-input" placeholder="Copy câu hỏi vào đây nhá pro 🐼"/>
+        <button id="search-btn">Search</button>
+    </div>
+    <div class="results" id="results"></div>
+</div>
+<!-- 🦶 FOOTER -->
+<footer class="footer">
+    <small>© 2025 EHOU Quiz Tool | <a href="https://zalo.me/0559132413" target="_blank">Liên hệ hỗ trợ</a></small>
+</footer>
+<div id="toast-container"
+     style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 9999;
+        pointer-events: none;
+     ">
+</div>
+<script src="config.js"></script>
+<script src="core/api.js"></script>
+<script src="core/utils.js"></script>
+<script src="search.js"></script>
+
+<div id="toast" class="toast">
+    <div class="toast-content">
+        <span><span id="toastIcon">✅</span> <span id="toastMessage">Thông báo</span></span>
+    </div>
+    <div class="toast-progress"></div>
+</div>
+</body>
+</html>
